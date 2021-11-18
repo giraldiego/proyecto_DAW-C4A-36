@@ -15,3 +15,28 @@ El sistema debe permitir al administrador de la inmobiliaria tener comunicación
 
 ## 4. Módulo del Asesor:
 El asesor deberá tener funcionalidades para crear inmuebles, contactar al cliente, aceptar y rechazar solicitudes.
+
+# Instructions
+
+## Pre-requisites
+
+Node.js >= 8.9.0 and running instances of a MongoDB server are
+required.
+
+The MongoDB server must be running at port: 27017
+
+## Installation
+
+Do the following to clone and start the project.
+
+```sh
+$ git clone https://github.com/giraldiego/proyecto_DAW-C4A-36.git
+$ cd proyecto_DAW-C4A-36
+$ npm i
+$ npm start
+```
+
+## Usage
+
+The main app will be running at http://localhost:3000. The API Explorer at
+http://localhost:3000/explorer/.
