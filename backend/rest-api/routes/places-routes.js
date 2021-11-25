@@ -13,8 +13,15 @@ router.use(authUser);
 // To get details about a place
 router.get('/:pid', placesController.getPlaceById);
 
-// To create and edit places, only asesores allowed
-// TODO: Restrict some operations to only owners
+// To create and edit places, only asesores and admins are allowed
+router.use(authRole('asesor','admin'));
+
+// To see a list of places from a specific user
+router.get(
+  '/user/:uid',
+  placesController.getPlacesByUserId
+);
+
 router.post(
   '/',
   [
@@ -23,24 +30,15 @@ router.post(
     check('offerType').not().isEmpty(),
     check('creator').not().isEmpty(),
   ],
-  authRole('asesor'),
   placesController.createPlace
 );
 
 router.patch(
   '/:pid',
   [check('offerType').not().isEmpty()],
-  authRole('asesor'),
   placesController.updatePlace
 );
 
-router.delete('/:pid', authRole('asesor'), placesController.deletePlace);
-
-// To see a list of places you own
-router.get(
-  '/user/:uid',
-  authRole('asesor'),
-  placesController.getPlacesByUserId
-);
+router.delete('/:pid', placesController.deletePlace);
 
 module.exports = router;
