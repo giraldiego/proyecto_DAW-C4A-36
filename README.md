@@ -20,23 +20,29 @@ El asesor deberá tener funcionalidades para crear inmuebles, contactar al clien
 
 ## Pre-requisites
 
-Node.js >= 8.9.0 and running instances of a MongoDB server are
-required.
+Node.js >= 8.9.0 and a MongoDB Cloud Cluster required.
 
-The MongoDB server must be running at port: 27017
+You need to set these variables in a `backend/rest-api/.env` file
 
+```
+CONNECTION_STRING=mongodb+srv://<username>:<password>:@<cluster_address>.mongodb.net/places?retryWrites=true&w=majority
+SENDGRID_API_KEY=your_sendgrid_api_key
+SENDGRID_VERIFIED_SENDER=your_email_verified_at_sendgrid
+ADMIN_EMAIL=your_email
+```
 ## Installation
 
-Do the following to clone and start the project.
+Do the following to clone the project and start the API server.
 
 ```sh
 $ git clone https://github.com/giraldiego/proyecto_DAW-C4A-36.git
 $ cd proyecto_DAW-C4A-36
+$ cd backend
+$ cd rest-api
 $ npm i
 $ npm start
 ```
 
 ## Usage
 
-The main app will be running at http://localhost:3000. The API Explorer at
-http://localhost:3000/explorer/.
+The main app will be running at http://localhost:3000.
