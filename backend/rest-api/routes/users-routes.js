@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const { check } = require('express-validator');
-const {authUser, authRole} = require('../middleware/check-auth');
+const { authUser, authRole } = require('../middleware/check-auth');
 
 const usersController = require('../controllers/users-controller');
-
 
 router.post(
   '/signup',
@@ -15,26 +14,31 @@ router.post(
     check('password').isLength({ min: 6 }),
   ],
   usersController.signup
-  );
+);
 
-  router.post('/login',   [
+router.post(
+  '/login',
+  [
     check('email').normalizeEmail().isEmail(),
     check('password').isLength({ min: 6 }),
-  ], usersController.login);
+  ],
+  usersController.login
+);
 
-  router.post(
-    '/reset-password',
-    [
-      check('email').normalizeEmail().isEmail(),
-    ],
-    usersController.resetPassword
-    );
+router.post(
+  '/reset-password',
+  [check('email').normalizeEmail().isEmail()],
+  usersController.resetPassword
+);
 
-  // After this point, only authenticated users are allowed
-  router.use(authUser);
+// After this point, only authenticated users are allowed
+router.use(authUser);
 
-  router.get('/', authRole('admin'), usersController.getAllUsers);
+router.get('/:uid', usersController.getUserById);
 
-  router.get('/:uid', authRole('admin'),usersController.getUserById);
+router.use(authRole('admin'));
 
-  module.exports = router;
+router.get('/', usersController.getAllUsers);
+
+
+module.exports = router;

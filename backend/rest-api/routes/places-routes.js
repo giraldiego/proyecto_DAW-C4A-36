@@ -5,9 +5,10 @@ const placesController = require('../controllers/places-controller');
 const { authUser, authRole } = require('../middleware/check-auth');
 
 // Everyone can see the list of places
+// TODO: Restric info provided in the list
 router.get('/', placesController.getAllPlaces);
 
-// After this point, only authenticated users are allowed
+// *After this point, only authenticated users are allowed
 router.use(authUser);
 
 // To get details about a place
@@ -22,6 +23,8 @@ router.get(
   placesController.getPlacesByUserId
 );
 
+// For creating a new place
+// TODO: Read creator from token info
 router.post(
   '/',
   [
@@ -33,6 +36,7 @@ router.post(
   placesController.createPlace
 );
 
+// For editing a place
 router.patch(
   '/:pid',
   [check('offerType').not().isEmpty()],
