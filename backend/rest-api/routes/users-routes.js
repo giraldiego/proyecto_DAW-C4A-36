@@ -44,4 +44,13 @@ router.get('/', usersController.getAllUsers);
 
 router.delete('/:uid', usersController.deleteUser);
 
+// TODO: Validate role from possible options
+router.patch(
+  '/:uid',
+  [
+    check('role').not().isEmpty(),
+  ],
+  usersController.patchUser
+);
+
 module.exports = router;

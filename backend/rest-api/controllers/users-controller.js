@@ -218,9 +218,44 @@ const deleteUser = async (req, res, next) => {
   res.json(response);
 };
 
+// Update one user with provided id
+const patchUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    return next(new HttpError('Invalid inputs', 400));
+  }
+
+  // Extract fields from body
+  const { role } = req.body;
+
+  let user;
+  try {
+    user = await User.findById(req.params.uid);
+  } catch (error) {
+    console.log(error.message);
+    return next(new HttpError('Something went wrong, please try again', 500));
+  }
+  if (!user) {
+    return next(new HttpError('Could not find user with that id ', 500));
+  }
+
+  // Update role
+  user.role = role;
+
+  try {
+    await user.save();
+  } catch (error) {
+    console.log(error.message);
+    return next(new HttpError('Something went wrong, please try again', 500));
+  }
+  res.json({message:'user updated!'});
+};
+
 exports.getAllUsers = getAllUsers;
 exports.getUser = getUser;
 exports.deleteUser = deleteUser;
+exports.patchUser = patchUser;
 exports.signup = signup;
 exports.login = login;
 exports.resetPassword = resetPassword;
