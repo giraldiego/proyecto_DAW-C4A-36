@@ -33,7 +33,7 @@ router.post(
   // After this point, only authenticated users are allowed
   router.use(authUser);
 
-  router.get('/', usersController.getAllUsers);
+  router.get('/', authRole('admin'), usersController.getAllUsers);
 
   router.get('/:uid', authRole('admin'),usersController.getUserById);
 
