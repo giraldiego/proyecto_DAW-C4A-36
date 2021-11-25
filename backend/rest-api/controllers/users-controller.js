@@ -5,7 +5,6 @@ const HttpError = require('../models/http-error');
 const User = require('../models/user');
 const sendEmail = require('../services/email-service');
 
-
 // Updated to Mongoose
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -174,46 +173,54 @@ const resetPassword = async (req, res, next) => {
 
   return sendEmail(resetEmail)
     .then(() => res.json({ message: 'Email sent' }))
-    .catch(err => next(new HttpError('Error sending the message, please try again', 500)));
+    .catch((err) =>
+      next(new HttpError('Error sending the message, please try again', 500))
+    );
 
   // res.status(201).json({ message: 'Reset password succesfull! Check your email' });
-
 };
 
 // Updated to Mongoose
 const getAllUsers = async (req, res, next) => {
   let users;
   try {
-    users = await User.find({}, '-password');
+    users = await User.find({}, 'email role');
   } catch (error) {
     return next(new HttpError('Something went wrong, please try again', 500));
   }
   res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
 
-// Updated to mongoose
-const getUserById = async (req, res, next) => {
-  const userId = req.params.uid;
-
+// Return a single user object
+const getUser = async (req, res, next) => {
   let user;
   try {
-    user = await User.findById(userId);
+    user = await User.findById(req.params.uid, 'email role');
   } catch (error) {
     console.log(error.message);
     return next(new HttpError('Something went wrong, please try again', 500));
   }
-
   if (!user) {
-    return next(
-      new HttpError('Could not find a user for the provided id.', 404)
-    );
+    return next(new HttpError('Could not find user with that id ', 500));
   }
+  res.json({ user: user.toObject({ getters: true }) });
+};
 
-  res.json({ user: user.toObject({ getters: true }) }); // => { place } => { place: place }
+// Delete one user with provided id
+const deleteUser = async (req, res, next) => {
+  let response;
+  try {
+    response = await User.deleteOne({ _id: req.params.uid });
+  } catch (error) {
+    console.log(error.message);
+    return next(new HttpError('Something went wrong, please try again', 500));
+  }
+  res.json(response);
 };
 
 exports.getAllUsers = getAllUsers;
-exports.getUserById = getUserById;
+exports.getUser = getUser;
+exports.deleteUser = deleteUser;
 exports.signup = signup;
 exports.login = login;
 exports.resetPassword = resetPassword;

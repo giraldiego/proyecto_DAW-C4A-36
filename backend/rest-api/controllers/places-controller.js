@@ -6,6 +6,7 @@ const User = require('../models/user');
 const mongoose = require('mongoose');
 
 // Updated for mongoose
+// TODO: Restric info provided in the list
 const getAllPlaces = async (req, res, next) => {
   let places;
 

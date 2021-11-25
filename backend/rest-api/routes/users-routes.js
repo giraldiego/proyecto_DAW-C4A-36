@@ -34,11 +34,13 @@ router.post(
 // After this point, only authenticated users are allowed
 router.use(authUser);
 
-router.get('/:uid', usersController.getUserById);
+router.get('/:uid', usersController.getUser);
 
+// After this point, only admin users are allowed
 router.use(authRole('admin'));
 
 router.get('/', usersController.getAllUsers);
 
+router.delete('/:uid', usersController.deleteUser);
 
 module.exports = router;
