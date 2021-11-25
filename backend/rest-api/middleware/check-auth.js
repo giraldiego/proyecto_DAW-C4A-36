@@ -16,10 +16,9 @@ function authUser(req, res, next) {
   }
 }
 
-function authRole(role) {
+function authRole(...roles) {
   return (req, res, next) => {
-    if (req.userData.role !== role) {
-
+    if (!roles.includes(req.userData.role)) {
       return next(new HttpError('Authentication failed!', 401));
     }
     next();
