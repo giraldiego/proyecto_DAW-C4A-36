@@ -5,14 +5,14 @@ const Place = require('../models/place');
 const User = require('../models/user');
 const mongoose = require('mongoose');
 
-// Updated for mongoose
-// TODO: Restric info provided in the list
+// TODO: Add filter functionality
 const getAllPlaces = async (req, res, next) => {
   let places;
 
   try {
-    places = await Place.find();
+    places = await Place.find({status:'activo'}, 'city type offertype');
   } catch (error) {
+    console.log(error.message);
     return next(new HttpError('Something went wrong, please try again', 500));
   }
 
@@ -21,7 +21,6 @@ const getAllPlaces = async (req, res, next) => {
   });
 };
 
-// Updated for mongoose
 const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid;
 
@@ -40,13 +39,12 @@ const getPlaceById = async (req, res, next) => {
   res.json({ place: place.toObject({ getters: true }) });
 };
 
-// Update for mongoose
 const getPlacesByUserId = async (req, res, next) => {
   const userId = req.params.uid;
 
   let places;
   try {
-    places = await Place.find({ creator: userId });
+    places = await Place.find({ creator: userId }, 'city type offertype');
   } catch (error) {
     console.log(error.message);
     return next(new HttpError('Something went wrong, please try again', 500));
@@ -59,11 +57,11 @@ const getPlacesByUserId = async (req, res, next) => {
   }
 
   res.json({
-    places: places.map((place) => place.toObject({ setters: true })),
+    places: places.map((place) => place.toObject({ getters: true })),
   });
 };
 
-// Updated for mongoose
+// TODO: Take creator info from token
 const createPlace = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -119,7 +117,6 @@ const updatePlace = async (req, res, next) => {
     throw new HttpError('Invalid inputs', 400);
   }
 
-  const { offerType } = req.body;
   const placeId = req.params.pid;
 
   // Get the place by the place id, throw error if cant find
@@ -135,6 +132,9 @@ const updatePlace = async (req, res, next) => {
   }
 
   // Update the changes manually :S
+  const { city, type, offerType, } = req.body;
+  place.city = city;
+  place.type = type;
   place.offerType = offerType;
 
   // patch the place using mongoose

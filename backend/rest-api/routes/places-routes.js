@@ -5,7 +5,6 @@ const placesController = require('../controllers/places-controller');
 const { authUser, authRole } = require('../middleware/check-auth');
 
 // Everyone can see the list of places
-// TODO: Restric info provided in the list
 router.get('/', placesController.getAllPlaces);
 
 // *After this point, only authenticated users are allowed
@@ -15,13 +14,10 @@ router.use(authUser);
 router.get('/:pid', placesController.getPlaceById);
 
 // To create and edit places, only asesores and admins are allowed
-router.use(authRole('asesor','admin'));
+router.use(authRole('asesor', 'admin'));
 
 // To see a list of places from a specific user
-router.get(
-  '/user/:uid',
-  placesController.getPlacesByUserId
-);
+router.get('/user/:uid', placesController.getPlacesByUserId);
 
 // For creating a new place
 // TODO: Read creator from token info
@@ -39,7 +35,11 @@ router.post(
 // For editing a place
 router.patch(
   '/:pid',
-  [check('offerType').not().isEmpty()],
+  [
+    check('city').not().isEmpty(),
+    check('type').not().isEmpty(),
+    check('offerType').not().isEmpty(),
+  ],
   placesController.updatePlace
 );
 

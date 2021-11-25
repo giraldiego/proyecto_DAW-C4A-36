@@ -34,6 +34,7 @@ router.post(
 // After this point, only authenticated users are allowed
 router.use(authUser);
 
+//TODO: Restrict to only owner or admin
 router.get('/:uid', usersController.getUser);
 
 // After this point, only admin users are allowed
