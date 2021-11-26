@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const generator = require('generate-password');
 const { validationResult } = require('express-validator');
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
@@ -144,8 +145,13 @@ const resetPassword = async (req, res, next) => {
     return next(new HttpError('Error, invalid email', 401));
   }
 
-  // Generate new password
-  newPassword = 'random_password';
+  // Generate random password
+  const newPassword = generator.generate({
+    length: 10,
+    numbers: true,
+  });
+  // newPassword = 'random_password';
+
   let hashedPassword;
   try {
     hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -163,7 +169,6 @@ const resetPassword = async (req, res, next) => {
     return next(new HttpError('Reset password failed, please try again', 500));
   }
 
-  // TODO: Send new credentials to email
   const resetEmail = {
     recipient: user.email,
     subject: 'Su nueva contraseña para HogaColombia',
@@ -249,7 +254,7 @@ const patchUser = async (req, res, next) => {
     console.log(error.message);
     return next(new HttpError('Something went wrong, please try again', 500));
   }
-  res.json({message:'user updated!'});
+  res.json({ message: 'user updated!' });
 };
 
 exports.getAllUsers = getAllUsers;
