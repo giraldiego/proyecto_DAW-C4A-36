@@ -115,7 +115,7 @@ const login = async (req, res, next) => {
     return next(new HttpError('Error generating response', 500));
   }
 
-  res.status(201).json({ userId: user.id, email: user.email, token: token });
+  res.status(201).json({ userId: user.id, name: user.name, email: user.email, roles: [user.role], accessToken: token });
 };
 
 // Updated to use mongoose
