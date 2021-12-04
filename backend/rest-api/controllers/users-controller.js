@@ -189,7 +189,7 @@ const resetPassword = async (req, res, next) => {
 const getAllUsers = async (req, res, next) => {
   let users;
   try {
-    users = await User.find({}, 'email role');
+    users = await User.find({}, 'name email role');
   } catch (error) {
     return next(new HttpError('Something went wrong, please try again', 500));
   }
