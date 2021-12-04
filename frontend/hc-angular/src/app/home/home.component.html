@@ -1,11 +1,29 @@
 <div class="container">
     <h2>Inmuebles disponibles</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <!-- <th>ID</th> -->
+          <th>Ciudad</th>
+          <th>Tipo Inmbueble</th>
+          <th>Tipo Oferta</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items">
+          <!-- <td><span>{{item.id}}</span></td> -->
+          <td><span>{{item.city}}</span></td>
+          <td><span>{{item.type}}</span></td>
+          <td><span>{{item.offerType}}</span></td>
+        </tr>
+        </tbody>
+      </table>
 
-    <ul>
+    <!-- <ul>
         <li *ngFor="let item of items" >
             <span>{{item.city}}:</span> {{item.type}}
         </li>
-    </ul>
+    </ul> -->
 
     <!-- <header class="jumbotron">
         <p>{{ content }}</p>
