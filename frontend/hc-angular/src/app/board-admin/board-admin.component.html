@@ -1,5 +1,22 @@
 <div class="container">
-    <header class="jumbotron">
-        <p>{{ content }}</p>
-    </header>
+    <h2>Usuarios</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <!-- <th>ID</th> -->
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Rol</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of items">
+          <!-- <td><span>{{item.id}}</span></td> -->
+          <td><span>{{item.name}}</span></td>
+          <td><span>{{item.email}}</span></td>
+          <td><span>{{item.role}}</span></td>
+        </tr>
+        </tbody>
+      </table>
+
 </div>
