@@ -16,6 +16,7 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { authInterceptorsProviders } from "./_helpers/auth.interceptor";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { HeaderComponent } from './header/header.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { MaterialModule } from './material/material.module';
     BoardAdminComponent,
     BoardModeratorComponent,
     BoardUserComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
