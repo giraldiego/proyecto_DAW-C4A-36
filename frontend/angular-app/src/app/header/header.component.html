@@ -1,0 +1,37 @@
+<div class="container">
+    <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/home" routerLink="home" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <span>
+                <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#home"/></svg>
+            </span>
+            Hogar Colombia
+        </a>
+
+        <ul *ngIf="!showAdminBoard && !showModeratorBoard" class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li *ngIf="isLoggedIn" >
+                <a href="#" class="nav-link px-2 link-primary">Solicitudes</a>
+            </li>
+            <li><a href="/aboutus" routerLink="aboutus" class="nav-link px-2 link-dark">Acerca de</a></li>
+            <li><a href="/contactus" routerLink="contactus" class="nav-link px-2 link-dark">Contáctanos</a></li>
+        </ul>
+        <ul *ngIf="isLoggedIn" class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li *ngIf="showAdminBoard">
+                <a href="/admin/users" routerLink="admin/users" class="nav-link px-2 link-primary">Usuarios</a>
+            </li>
+            <li *ngIf="showAdminBoard || showModeratorBoard">
+                <a href="/admin/places" routerLink="admin/places" class="nav-link px-2 link-primary">Inmuebles</a>
+            </li>
+        </ul>
+
+        <div class="col-md-3 text-end" *ngIf="!isLoggedIn">
+            <a class="btn btn-outline-primary me-2" href="/login" routerLink="login">Ingresar</a>
+            <a class="btn btn-primary" href="/register" routerLink="register">Registrarme</a>
+        </div>
+
+        <div class="col-md-3 text-end" *ngIf="isLoggedIn">
+            <a class="btn btn-primary" (click)="logout()">Salir</a>
+        </div>
+
+    </header>
+</div>
