@@ -1,5 +1,5 @@
 Things to do:
-- Implementar llamado POST a contactus en backend
+- ~~Implementar llamado POST a contactus en backend~~
 - ~~Mostrar mensajes de respuesta por error en el frontend en login~~
 - ~~Eliminar doble refresh en login form~~
 - Crear componente para solicitudes de los usuarios

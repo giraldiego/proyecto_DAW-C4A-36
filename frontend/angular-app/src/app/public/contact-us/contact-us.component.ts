@@ -11,18 +11,28 @@ import { UserService } from 'src/app/_services/user.service';
 export class ContactUsComponent {
   model = new ConctactUsMsg('','');
   submitted = false;
+  response = '';
+  sentFailed = false;
+  sentSucceded = false;
 
   constructor(private userService: UserService) {}
 
   onSubmit(): void {
     this.submitted = true;
 
-    console.log(this.model);
-    // this.userService.resetPassword(
-    //   this.model.
-    //   this.model.message.value
-    // )
-    console.log('Mensaje enviado!');
+    this.userService.resetPassword(
+      this.model.email,
+      this.model.message
+    ).subscribe({
+        next: data => {
+          this.sentSucceded = true;
+          this.response = data.message;
+        },
+        error: err => {
+          console.log(err);
+          this.sentFailed = true;
+          this.response = err.error.message;
+        }
+      });
   }
-
 }

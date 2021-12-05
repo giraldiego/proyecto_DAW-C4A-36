@@ -1,5 +1,6 @@
 <div class="container" style="max-width: 660px; background-color: #f5f5f5;">
-    <form #contactForm="ngForm" (ngSubmit)="onSubmit()" >
+    <form *ngIf="!sentSucceded && !submitted"
+        #contactForm="ngForm" (ngSubmit)="onSubmit()" >
         <div class="mb-3 form-group">
             <label for="email" class="form-label">Indiquenos su email:</label>
             <input type="email" class="form-control" id="email" placeholder="name@example.com"
@@ -28,5 +29,10 @@
         [disabled]="!contactForm.form.valid"
         >Enviar</button>
     </form>
-
+    <div class="alert alert-warning" *ngIf="submitted && sentFailed">
+        No se puedo enviar el mensaje!<br />{{ response }}
+    </div>
+    <div class="alert alert-success" *ngIf="submitted && sentSucceded">
+        Mensaje enviado!.
+    </div>
 </div>
