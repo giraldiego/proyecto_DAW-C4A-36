@@ -61,7 +61,7 @@ const signup = async (req, res, next) => {
 };
 
 // Updated to use mongoose
-const login = async (req, res, next) => {
+const signin = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
@@ -262,5 +262,5 @@ exports.getUser = getUser;
 exports.deleteUser = deleteUser;
 exports.patchUser = patchUser;
 exports.signup = signup;
-exports.login = login;
+exports.signin = signin;
 exports.resetPassword = resetPassword;
