@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
+  submitted = false;
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.submitted = true;
     this.authService.login(
       this.form.controls['email'].value,
       this.form.controls['password'].value)
