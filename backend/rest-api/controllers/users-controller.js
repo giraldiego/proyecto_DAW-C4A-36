@@ -57,7 +57,7 @@ const signup = async (req, res, next) => {
 
   // TODO: Send email for verification
 
-  res.status(201).json({ message: 'Sign up succesfull!' });
+  res.status(201).json({ message: 'Signup succesfull!' });
 };
 
 // Updated to use mongoose
@@ -107,7 +107,7 @@ const signin = async (req, res, next) => {
         email: user.mail,
         role: user.role,
       },
-      'privacy_key', // TODO: Change this for something secure
+      process.env.PRIVACY_KEY,
       { expiresIn: '1h' }
     );
   } catch (error) {
