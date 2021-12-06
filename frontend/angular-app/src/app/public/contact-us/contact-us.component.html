@@ -30,7 +30,7 @@
         >Enviar</button>
     </form>
     <div class="alert alert-warning" *ngIf="submitted && sentFailed">
-        No se puedo enviar el mensaje!<br />{{ response }}
+        No se pudo enviar el mensaje!<br />{{ response }}
     </div>
     <div class="alert alert-success" *ngIf="submitted && sentSucceded">
         Mensaje enviado!.
