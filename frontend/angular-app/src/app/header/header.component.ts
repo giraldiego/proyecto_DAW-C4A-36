@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
 import { TokenStorageService } from '../_services/token-storage.service';
 
 const ROLE_ADMIN = 'admin';
@@ -19,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private tokenStorageService: TokenStorageService,
-    private router: Router,) { }
+    ) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -38,6 +37,6 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.tokenStorageService.signOut();
     window.location.reload();
-    this.router.navigate(['/home']);
+    window.location.replace('/home');
   }
 }
