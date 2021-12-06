@@ -8,12 +8,16 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class UserListComponent implements OnInit {
   content?: string;
+  users?:any[];
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.userService.getAdminBoard().subscribe({
+    this.userService.getAllUsers().subscribe({
       next: data => {
+        this.users = data.users;
+        console.log(this.users);
+
         this.content = data;
       },
       error: err => {

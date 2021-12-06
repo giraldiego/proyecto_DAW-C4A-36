@@ -1,5 +1,32 @@
 <div class="container">
-    <header class="jumbotron">
-        <p>{{ content }}</p>
-    </header>
+    <div class="border">
+        <button class="btn btn-md btn-outline-primary">
+            <i class="fa fa-user"></i>Crear Usuario</button>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <!-- <th>ID</th> -->
+                <th>Nombre</th>
+                <th>email</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <!-- <td><span>{{user.id}}</span></td> -->
+                <td><span>{{user.name}}</span></td>
+                <td><span>{{user.email}}</span></td>
+                <td><span>{{user.role}}</span></td>
+                <td>
+                    <button class="btn btn-sm btn-info">
+                      <i class="fa fa-search"></i>Details</button>
+                    <button class="btn btn-sm btn-warning">
+                      <i class="fa fa-edit"></i>Edit</button>
+                    <button class="btn btn-sm btn-danger">
+                      <i class="fa fa-remove"></i>Delete</button>
+                  </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
