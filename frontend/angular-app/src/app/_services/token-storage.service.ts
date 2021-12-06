@@ -14,6 +14,26 @@ export class TokenStorageService {
 
   constructor() { }
 
+  isLoggedIn() {
+    return !!this.getToken();
+  }
+
+  isModerator() {
+    const roles = this.getUser().roles;
+    if (roles) {
+      return roles[0] === 'asesor';
+    }
+    return false;
+  }
+
+  isAdmin() {
+    const roles = this.getUser().roles;
+    if (roles) {
+      return roles[0] === 'admin';
+    }
+    return false;
+  }
+
   signOut(): void {
     window.sessionStorage.clear();
   }
