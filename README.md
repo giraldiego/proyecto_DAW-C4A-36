@@ -15,3 +15,52 @@ El sistema debe permitir al administrador de la inmobiliaria tener comunicación
 
 ## 4. Módulo del Asesor:
 El asesor deberá tener funcionalidades para crear inmuebles, contactar al cliente, aceptar y rechazar solicitudes.
+
+# Instruciones
+
+## Pre-requisitos
+
+Node.js >= 8.9.0 y un Cluster de MongoDB Cloud son requeridos. Angular > 13.0
+
+Crear el siguiente archivo `backend/rest-api/.env` y asignar los valores de las variables acorde a su caso particular:
+
+```
+CONNECTION_STRING=mongodb+srv://<username>:<password>:@<cluster_address>.mongodb.net/places?retryWrites=true&w=majority
+SENDGRID_API_KEY=your_sendgrid_api_key
+SENDGRID_VERIFIED_SENDER=your_email_verified_at_sendgrid
+ADMIN_EMAIL=your_email
+```
+
+
+## Instalacion
+
+Haga lo siguiente para clonar el repo en su maquina:.
+
+```sh
+$ git clone https://github.com/giraldiego/proyecto_DAW-C4A-36.git
+$ cd proyecto_DAW-C4A-36
+```
+
+Configure y ejecute el servidor del backend:
+```sh
+$ cd backend
+$ cd rest-api
+$ npm i
+$ npm start
+```
+
+Abra otra ventana de terminal y desde el directorio raiz, configure y ejecute el servidor del frontend:
+```sh
+$ cd frontend
+$ cd hc-angular
+$ npm i
+$ ng serve -o
+```
+Se abrira una ventana del navegador desde donde podra ejecutar la app, cree unos cuantos usuario, el rol por defecto al crearlos
+es "cliente",  cambie el rol de uno de ellos a "admin" editando directamente los documentos en el Cluster de mongo para acceder
+a mas funcionalidades desde la webapp. 
+
+## Uso
+
+El servidor del backend estara en http://localhost:3000.
+El servidor del frontend estara en http://localhost:4200.
