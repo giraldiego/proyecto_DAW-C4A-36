@@ -20,7 +20,7 @@ export class ContactUsComponent {
   onSubmit(): void {
     this.submitted = true;
 
-    this.userService.resetPassword(
+    this.userService.contactUs(
       this.model.email,
       this.model.message
     ).subscribe({

@@ -34,7 +34,7 @@ export class UserService {
     return this.http.get(API_URL + 'users', { responseType: 'json' });
   }
 
-  resetPassword(email: string, message: string): Observable<any> {
+  contactUs(email: string, message: string): Observable<any> {
     return this.http.post(API_URL + 'contactus', {
       from: email,
       message
