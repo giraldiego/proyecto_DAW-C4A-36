@@ -31,4 +31,10 @@ export class AuthService {
       password
     }, httpOptions);
   }
+
+  resetPassword(email: string): Observable<any> {
+    return this.http.post(AUTH_API + 'reset-password', {
+      email
+    });
+  }
 }

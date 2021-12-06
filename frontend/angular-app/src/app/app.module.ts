@@ -14,6 +14,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { AboutComponent } from './public/about/about.component';
 import { ContactUsComponent } from './public/contact-us/contact-us.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ContactUsComponent } from './public/contact-us/contact-us.component';
     LoginComponent,
     RegisterComponent,
     AboutComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
