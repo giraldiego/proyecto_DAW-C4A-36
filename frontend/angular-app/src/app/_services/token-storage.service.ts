@@ -21,7 +21,7 @@ export class TokenStorageService {
   isModerator() {
     const roles = this.getUser().roles;
     if (roles) {
-      return roles[0] === 'asesor';
+      return ['asesor', 'admin'].includes(roles[0]);
     }
     return false;
   }
