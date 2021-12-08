@@ -19,7 +19,7 @@
                 <td><span>{{user.email}}</span></td>
                 <td><span>{{user.role}}</span></td>
                 <td>
-                    <a routerLink="./{{user.id}}" class="btn btn-sm btn-warning">
+                    <a routerLink="./edit/{{user.id}}" class="btn btn-sm btn-warning">
                       <i class="fa fa-edit"></i></a>
                     <button class="btn btn-sm btn-danger"
                     (click)="deleteUser(user.id)">

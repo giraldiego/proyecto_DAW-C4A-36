@@ -7,11 +7,12 @@ import { User } from "../../../models/user";
 import { UserService } from "../../../_services/user.service";
 
 @Component({
-  selector: 'app-user-detail',
-  templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.css']
+  selector: 'app-user-edit',
+  templateUrl: './user-edit.component.html',
+  styleUrls: ['./user-edit.component.css']
 })
-export class UserDetailComponent implements OnInit {
+export class UserEditComponent implements OnInit {
+
   userId:string = '';
 
   user:User = {

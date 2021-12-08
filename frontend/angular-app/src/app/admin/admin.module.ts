@@ -5,8 +5,7 @@ import { FormsModule } from "@angular/forms";
 import { AdminRoutingModule } from './admin-routing.module';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { PlaceListComponent } from './places/place-list/place-list.component';
-import { UserCreateComponent } from './users/user-create/user-create.component';
-import { UserDetailComponent } from './users/user-detail/user-detail.component';
+import { UserEditComponent } from './users/user-edit/user-edit.component';
 
 
 @NgModule({
@@ -14,8 +13,7 @@ import { UserDetailComponent } from './users/user-detail/user-detail.component';
 
     UserListComponent,
        PlaceListComponent,
-       UserCreateComponent,
-       UserDetailComponent
+       UserEditComponent
   ],
   imports: [
     CommonModule,

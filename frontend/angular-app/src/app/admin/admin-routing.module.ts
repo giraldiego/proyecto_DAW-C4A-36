@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from '../auth/guards/admin.guard';
 import { ModeratorGuard } from '../auth/guards/moderator.guard';
 import { PlaceListComponent } from './places/place-list/place-list.component';
-import { UserDetailComponent } from './users/user-detail/user-detail.component';
+import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 
 const routes: Routes = [
@@ -13,12 +13,12 @@ const routes: Routes = [
     canActivate: [AdminGuard] },
   {
     path: 'users/create',
-    component: UserDetailComponent,
+    component: UserEditComponent,
     canActivate: [AdminGuard]
   },
   {
-    path: 'users/:id',
-    component: UserDetailComponent,
+    path: 'users/edit/:id',
+    component: UserEditComponent,
     canActivate: [AdminGuard] },
   {
     path: 'places',
