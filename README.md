@@ -53,7 +53,7 @@ $ npm start
 Abra otra ventana de terminal y desde el directorio raiz, configure y ejecute el servidor del frontend:
 ```sh
 $ cd frontend
-$ cd hc-angular
+$ cd angular-app
 $ npm i
 $ ng serve -o
 ```
