@@ -17,7 +17,7 @@ export class UserDetailComponent implements OnInit {
   user:User = {
     name:'',
     email:'',
-    role:''
+    role: 'asesor'
   };
 
   roles = ['cliente', 'asesor', 'admin'];
@@ -56,7 +56,11 @@ export class UserDetailComponent implements OnInit {
     this.submitted = true;
     console.log('submitting...');
 
-    this.userService.patchUser(this.userId, this.user)
+    if (this.userId === '') {
+      this.user.id = undefined;
+    }
+
+    this.userService.editUser(this.user)
       .subscribe({
         next: (data) => {
           console.log(data);
@@ -69,4 +73,5 @@ export class UserDetailComponent implements OnInit {
         }
       });
   }
+
 }

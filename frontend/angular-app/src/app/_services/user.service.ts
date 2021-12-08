@@ -50,11 +50,24 @@ export class UserService {
     return this.http.delete(API_URL + `users/${id}`, { responseType: 'json' });
   }
 
-  patchUser(id: string, user: User): Observable<any> {
+  // This creates or edits an user
+  editUser(user: User): Observable<any> {
+    const {id, name, email, role } = user;
+
+    // If id is undefined, then create a new user via POST
+    if (!id) {
+      return this.http.post(API_URL + 'users/', {
+        name,
+        email,
+        role
+      }, httpOptions);
+    }
+
+    // If there is an id, then patch the user via API
     return this.http.patch(API_URL + `users/${id}`, {
-      name: user.name,
-      email: user.email,
-      role: user.role
+      name,
+      email,
+      role
     }, httpOptions);
   }
 }
