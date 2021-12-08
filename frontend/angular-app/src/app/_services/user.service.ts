@@ -45,4 +45,12 @@ export class UserService {
   getUser(id: string): Observable<any> {
     return this.http.get(API_URL + `users/${id}`, { responseType: 'json' });
   }
+
+  patchUser(id: string, user: User): Observable<any> {
+    return this.http.patch(API_URL + `users/${id}`, {
+      name: user.name,
+      email: user.email,
+      role: user.role
+    }, httpOptions);
+  }
 }

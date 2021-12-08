@@ -12,7 +12,19 @@ import { UserService } from "../../../_services/user.service";
   styleUrls: ['./user-detail.component.css']
 })
 export class UserDetailComponent implements OnInit {
-  user?:User;
+  userId:string = '';
+
+  user:User = {
+    name:'',
+    email:'',
+    role:''
+  };
+
+  roles = ['cliente', 'asesor', 'admin'];
+
+  submitted = false;
+  response = '';
+  saveFailed = false;
 
   constructor(
     private userService: UserService,
@@ -25,6 +37,9 @@ export class UserDetailComponent implements OnInit {
     if (!id) {
       return;
     }
+
+    this.userId = id;
+
     this.userService.getUser(id)
     .subscribe({
       next: data => {
@@ -35,5 +50,23 @@ export class UserDetailComponent implements OnInit {
         console.log(err.error.message);
       }
     })
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    console.log('submitting...');
+
+    this.userService.patchUser(this.userId, this.user)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          this.location.back();
+        },
+        error: err => {
+          console.log(err.error.message);
+          this.response = err.error.message;
+          this.saveFailed = true;
+        }
+      })
   }
 }

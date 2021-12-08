@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from "@angular/forms";
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { UserListComponent } from './users/user-list/user-list.component';
@@ -10,7 +11,7 @@ import { UserDetailComponent } from './users/user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
-  
+
     UserListComponent,
        PlaceListComponent,
        UserCreateComponent,
@@ -18,7 +19,8 @@ import { UserDetailComponent } from './users/user-detail/user-detail.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule
   ]
 })
 export class AdminModule { }
