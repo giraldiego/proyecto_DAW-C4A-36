@@ -12,11 +12,14 @@ const routes: Routes = [
     component: UserListComponent,
     canActivate: [AdminGuard] },
   {
-    path: 'users/detail/:id',
+    path: 'users/create',
+    component: UserDetailComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'users/:id',
     component: UserDetailComponent,
     canActivate: [AdminGuard] },
-
-
   {
     path: 'places',
     component: PlaceListComponent,
