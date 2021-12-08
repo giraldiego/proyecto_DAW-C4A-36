@@ -200,7 +200,7 @@ const getAllUsers = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   let user;
   try {
-    user = await User.findById(req.params.uid, 'email role');
+    user = await User.findById(req.params.uid, '-password');
   } catch (error) {
     console.log(error.message);
     return next(new HttpError('Something went wrong, please try again', 500));
