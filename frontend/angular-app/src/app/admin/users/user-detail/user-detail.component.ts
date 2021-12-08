@@ -67,6 +67,6 @@ export class UserDetailComponent implements OnInit {
           this.response = err.error.message;
           this.saveFailed = true;
         }
-      })
+      });
   }
 }

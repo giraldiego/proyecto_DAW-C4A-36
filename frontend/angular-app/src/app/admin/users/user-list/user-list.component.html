@@ -21,7 +21,8 @@
                 <td>
                     <a routerLink="./detail/{{user.id}}" class="btn btn-sm btn-warning">
                       <i class="fa fa-edit"></i></a>
-                    <button class="btn btn-sm btn-danger">
+                    <button class="btn btn-sm btn-danger"
+                    (click)="deleteUser(user.id)">
                       <i class="fa fa-trash"></i></button>
                   </td>
             </tr>

@@ -46,6 +46,10 @@ export class UserService {
     return this.http.get(API_URL + `users/${id}`, { responseType: 'json' });
   }
 
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete(API_URL + `users/${id}`, { responseType: 'json' });
+  }
+
   patchUser(id: string, user: User): Observable<any> {
     return this.http.patch(API_URL + `users/${id}`, {
       name: user.name,
