@@ -20,6 +20,16 @@ router.get('/', usersController.getAllUsers);
 router.delete('/:uid', usersController.deleteUser);
 
 // TODO: Validate role from possible options
+router.post(
+  '/',
+  [
+    check('name').not().isEmpty(),
+    check('email').not().isEmpty(),
+    check('role').not().isEmpty()
+  ],
+  usersController.createUser
+);
+
 router.patch(
   '/:uid',
   [
