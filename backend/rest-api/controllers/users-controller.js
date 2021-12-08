@@ -232,7 +232,7 @@ const patchUser = async (req, res, next) => {
   }
 
   // Extract fields from body
-  const { role } = req.body;
+  const { name, email, role } = req.body;
 
   let user;
   try {
@@ -245,7 +245,22 @@ const patchUser = async (req, res, next) => {
     return next(new HttpError('Could not find user with that id ', 500));
   }
 
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (error) {
+    return next(new HttpError('Singup failed, please try again', 500));
+  }
+
+  if (existingUser && (existingUser.id !== user.id)) {
+    return next(
+      new HttpError('Error, an user with that email already exists', 422)
+    );
+  }
+
   // Update role
+  user.name = name;
+  user.email = email;
   user.role = role;
 
   try {

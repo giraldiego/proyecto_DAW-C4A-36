@@ -23,7 +23,9 @@ router.delete('/:uid', usersController.deleteUser);
 router.patch(
   '/:uid',
   [
-    check('role').not().isEmpty(),
+    check('name').not().isEmpty(),
+    check('email').not().isEmpty(),
+    check('role').not().isEmpty()
   ],
   usersController.patchUser
 );
