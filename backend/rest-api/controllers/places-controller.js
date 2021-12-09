@@ -68,13 +68,14 @@ const createPlace = async (req, res, next) => {
     return next(new HttpError('Invalid inputs', 422));
   }
 
-  const { city, type, offerType } = req.body;
+  const { city, type, offerType, price } = req.body;
   const creator = req.userData.userId;
 
   const place = new Place({
     city,
     type,
     offerType,
+    price,
     creator,
   });
 
@@ -132,10 +133,11 @@ const updatePlace = async (req, res, next) => {
   }
 
   // Update the changes manually :S
-  const { city, type, offerType, } = req.body;
+  const { city, type, offerType, price} = req.body;
   place.city = city;
   place.type = type;
   place.offerType = offerType;
+  place.price = price;
 
   // patch the place using mongoose
   try {
