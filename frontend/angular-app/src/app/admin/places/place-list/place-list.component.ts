@@ -26,4 +26,16 @@ export class PlaceListComponent implements OnInit {
     });
   }
 
+  deletePlace(placeId: string) {
+    this.placeService.deletePlace(placeId)
+    .subscribe({
+      next: (data) => {
+        console.log(data);
+        this.places = this.places?.filter(p => p.id !== placeId);
+      },
+      error: err => {
+        console.log(err.error.message);
+      }
+    });
+  }
 }

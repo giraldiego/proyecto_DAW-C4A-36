@@ -1,7 +1,7 @@
 <div class="container">
     <div class="border">
         <a routerLink="./create" class="btn btn-md btn-outline-primary">
-            <i class="fa fa-plus-square"></i>Crear Inmueble</a>
+            <i class="fa fa-plus"></i> Crear Inmueble</a>
     </div>
     <table class="table table-bordered table-striped">
         <thead>
@@ -20,13 +20,13 @@
                 <td><span>{{place.type}}</span></td>
                 <td><span>{{place.offerType}}</span></td>
                 <td><span>{{place.price | currency }}</span></td>
-                <!-- <td>
+                <td>
                     <a routerLink="./edit/{{place.id}}" class="btn btn-sm btn-warning">
                       <i class="fa fa-edit"></i></a>
                     <button class="btn btn-sm btn-danger"
-                    (click)="deleteUser(place.id)">
+                    (click)="deletePlace(place.id)">
                       <i class="fa fa-trash"></i></button>
-                </td> -->
+                </td>
             </tr>
         </tbody>
     </table>
