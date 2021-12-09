@@ -10,7 +10,7 @@ const getAllPlaces = async (req, res, next) => {
   let places;
 
   try {
-    places = await Place.find({status:'activo'}, 'city type offerType');
+    places = await Place.find({status:'activo'});
   } catch (error) {
     console.log(error.message);
     return next(new HttpError('Something went wrong, please try again', 500));
