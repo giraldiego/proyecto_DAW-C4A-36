@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit {
     .subscribe({
       next: (data) => {
         console.log(data);
-        window.location.reload();
+        this.users = this.users?.filter(u => u.id !== userId);
       },
       error: err => {
         console.log(err.error.message);

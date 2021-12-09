@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { User } from "../../../models/user";
+import { User, ROLE } from "../../../models/user";
 import { UserService } from "../../../_services/user.service";
 
 @Component({
@@ -13,15 +13,15 @@ import { UserService } from "../../../_services/user.service";
 })
 export class UserEditComponent implements OnInit {
 
-  userId:string = '';
+  userId?:string;
 
   user:User = {
     name:'',
     email:'',
-    role: 'asesor'
+    role: ROLE[1] // asesor
   };
 
-  roles = ['cliente', 'asesor', 'admin'];
+  roles = ROLE;
 
   submitted = false;
   response = '';
@@ -56,10 +56,6 @@ export class UserEditComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     console.log('submitting...');
-
-    if (this.userId === '') {
-      this.user.id = undefined;
-    }
 
     this.userService.editUser(this.user)
       .subscribe({
