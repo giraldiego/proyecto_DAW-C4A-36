@@ -61,7 +61,6 @@ const getPlacesByUserId = async (req, res, next) => {
   });
 };
 
-// TODO: Take creator info from token
 const createPlace = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -69,7 +68,8 @@ const createPlace = async (req, res, next) => {
     return next(new HttpError('Invalid inputs', 422));
   }
 
-  const { city, type, offerType, creator } = req.body;
+  const { city, type, offerType } = req.body;
+  const creator = req.userData.userId;
 
   const place = new Place({
     city,
