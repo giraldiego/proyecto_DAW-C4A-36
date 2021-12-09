@@ -1,1 +1,33 @@
-<p>Proximamente!</p>
+<div class="container">
+    <div class="border">
+        <a routerLink="./create" class="btn btn-md btn-outline-primary">
+            <i class="fa fa-plus-square"></i>Crear Inmueble</a>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <!-- <th>ID</th> -->
+                <th>Ciudad</th>
+                <th>Tipo</th>
+                <th>Oferta</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let place of places">
+                <!-- <td><span>{{place.id}}</span></td> -->
+                <td><span>{{place.city}}</span></td>
+                <td><span>{{place.type}}</span></td>
+                <td><span>{{place.offerType}}</span></td>
+                <td><span>{{place.price | currency }}</span></td>
+                <!-- <td>
+                    <a routerLink="./edit/{{place.id}}" class="btn btn-sm btn-warning">
+                      <i class="fa fa-edit"></i></a>
+                    <button class="btn btn-sm btn-danger"
+                    (click)="deleteUser(place.id)">
+                      <i class="fa fa-trash"></i></button>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+</div>
