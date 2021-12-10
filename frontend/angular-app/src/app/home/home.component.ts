@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PlaceService } from '../_services/place.service';
 import { UserService } from '../_services/user.service';
 
 @Component({
@@ -8,18 +9,20 @@ import { UserService } from '../_services/user.service';
 })
 export class HomeComponent implements OnInit {
   content?: string;
-  items?:any[];
+  places?:any[];
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private placeService: PlaceService) { }
 
   ngOnInit(): void {
-    this.userService.getPublicContent().subscribe({
+    this.placeService.getAllPlaces().subscribe({
       next: data => {
         this.content = data;
-        this.items = JSON.parse(data)['places'];
+        this.places = data['places'];
       },
       error: err => {
-        this.content = JSON.parse(err.error).message;
+        this.content = err.error.message;
       }
     });
   }
