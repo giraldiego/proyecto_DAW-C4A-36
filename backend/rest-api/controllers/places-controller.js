@@ -44,17 +44,17 @@ const getPlacesByUserId = async (req, res, next) => {
 
   let places;
   try {
-    places = await Place.find({ creator: userId }, 'city type offertype');
+    places = await Place.find({ creator: userId });
   } catch (error) {
     console.log(error.message);
     return next(new HttpError('Something went wrong, please try again', 500));
   }
 
-  if (!places || places.length === 0) {
-    return next(
-      new HttpError('Could not find places for the provided user id.', 404)
-    );
-  }
+  // if (!places || places.length === 0) {
+  //   return next(
+  //     new HttpError('Could not find places for the provided user id.', 404)
+  //   );
+  // }
 
   res.json({
     places: places.map((place) => place.toObject({ getters: true })),
@@ -110,12 +110,12 @@ const createPlace = async (req, res, next) => {
   res.status(201).json({ place: place });
 };
 
-// TODO: Implement relation User-Place
+// TODO: Implement relation User-Place - DONE
 const updatePlace = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
-    throw new HttpError('Invalid inputs', 400);
+    return next(new HttpError('Invalid inputs', 400));
   }
 
   const placeId = req.params.pid;
@@ -129,7 +129,12 @@ const updatePlace = async (req, res, next) => {
   }
 
   if (!place) {
-    next(new HttpError('Could not find a place for the provided id.', 404));
+    return next(new HttpError('Could not find a place for the provided id.', 404));
+  }
+
+  // Only admins or owner can modify a place
+  if (!(req.userData.userId === place.creator.valueOf() || req.userData.role === 'admin')) {
+    return next(new HttpError('Unauthorized to update this place.', 401));
   }
 
   // Update the changes manually :S
@@ -164,7 +169,7 @@ const deletePlace = async (req, res, next) => {
   }
 
   if (!place) {
-    next(new HttpError('Could not find a place for the provided id.', 404));
+    return next(new HttpError('Could not find a place for the provided id.', 404));
   }
 
   // console.log(place);
