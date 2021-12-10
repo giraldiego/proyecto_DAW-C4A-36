@@ -68,7 +68,7 @@ const createPlace = async (req, res, next) => {
     return next(new HttpError('Invalid inputs', 422));
   }
 
-  const { city, type, offerType, price } = req.body;
+  const { city, type, offerType, price, urlPicture } = req.body;
   const creator = req.userData.userId;
 
   const place = new Place({
@@ -77,6 +77,7 @@ const createPlace = async (req, res, next) => {
     offerType,
     price,
     creator,
+    urlPicture
   });
 
   // Check if the userId provided is a valid one
