@@ -6,3 +6,5 @@ export interface User {
     role: string;
     emailVerified?: boolean;
   }
+
+export const ROLE = ['cliente', 'asesor', 'admin'];

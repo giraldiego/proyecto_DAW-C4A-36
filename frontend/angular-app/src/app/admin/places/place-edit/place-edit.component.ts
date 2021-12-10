@@ -1,34 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
-import { User, ROLE } from "../../../models/user";
-import { UserService } from "../../../_services/user.service";
+import { Place, TYPE, OFFER_TYPE, STATUS } from 'src/app/models/place';
+import { PlaceService } from 'src/app/_services/place.service';
 
 @Component({
-  selector: 'app-user-edit',
-  templateUrl: './user-edit.component.html',
-  styleUrls: ['./user-edit.component.css']
+  selector: 'app-place-edit',
+  templateUrl: './place-edit.component.html',
+  styleUrls: ['./place-edit.component.css']
 })
-export class UserEditComponent implements OnInit {
+export class PlaceEditComponent implements OnInit {
+  placeId?:string;
 
-  userId?:string;
-
-  user:User = {
-    name:'',
-    email:'',
-    role: ROLE[1] // asesor
+  place:Place = {
+    city:'',
+    type:'',
+    offerType: '',
+    price: 0
   };
 
-  roles = ROLE;
+  types = TYPE;
+  offerTypes = OFFER_TYPE;
 
   submitted = false;
   response = '';
   saveFailed = false;
 
   constructor(
-    private userService: UserService,
+    private placeService: PlaceService,
     private route: ActivatedRoute,
     private location: Location
   ) { }
@@ -39,13 +38,13 @@ export class UserEditComponent implements OnInit {
       return;
     }
 
-    this.userId = id;
+    this.placeId = id;
 
-    this.userService.getUser(id)
+    this.placeService.getPlace(id)
     .subscribe({
       next: data => {
         console.log(data);
-        this.user = data.user;
+        this.place = data.place;
       },
       error: err => {
         console.log(err.error.message);
@@ -57,7 +56,7 @@ export class UserEditComponent implements OnInit {
     this.submitted = true;
     console.log('submitting...');
 
-    this.userService.editUser(this.user)
+    this.placeService.editPlace(this.place)
       .subscribe({
         next: (data) => {
           console.log(data);
@@ -70,5 +69,4 @@ export class UserEditComponent implements OnInit {
         }
       });
   }
-
 }
