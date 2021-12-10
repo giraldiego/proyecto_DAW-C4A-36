@@ -6,6 +6,7 @@ export interface Place {
     price: number;
     status?: string;
     creator?: string;
+    urlPicture?: string;
   }
 
 export const TYPE = ['apartamento', 'casa', 'local'];
