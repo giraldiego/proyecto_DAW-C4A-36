@@ -25,6 +25,7 @@
                 <option *ngFor="let role of roles" [value]="role">{{role}}</option>
             </select>
         </div>
+        <hr>
         <button type="submit" class="btn btn-primary"
         [disabled]="!userForm.form.valid"
         >Grabar</button>
