@@ -22,6 +22,7 @@ const placeSchema = new Schema({
     enum: STATUS,
     default: 'activo',
   }, // activo, inactivo, comprado, ocupado
+  urlPicture: String,
   // pictures: [String],
   // urlVideo: String,
   // contactInfo: String,
