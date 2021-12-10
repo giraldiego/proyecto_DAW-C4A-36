@@ -6,6 +6,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './public/about/about.component';
 import { ContactUsComponent } from './public/contact-us/contact-us.component';
+import { RequestListComponent } from "./requests/request-list/request-list.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -17,6 +18,8 @@ const routes: Routes = [
 
   { path: 'aboutus', component: AboutComponent },
   { path: 'contactus', component: ContactUsComponent },
+
+  { path: 'requests', component: RequestListComponent },
 
   {
     path: 'admin',

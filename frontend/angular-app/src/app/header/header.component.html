@@ -10,7 +10,7 @@
 
         <ul *ngIf="!showAdminBoard && !showModeratorBoard" class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li *ngIf="isLoggedIn" >
-                <a href="#" class="nav-link px-2 link-primary">Solicitudes</a>
+                <a href="/requests" routerLink="requests" class="nav-link px-2 link-primary">Solicitudes</a>
             </li>
             <li><a href="/aboutus" routerLink="aboutus" class="nav-link px-2 link-dark">Acerca de</a></li>
             <li><a href="/contactus" routerLink="contactus" class="nav-link px-2 link-dark">Contáctanos</a></li>
