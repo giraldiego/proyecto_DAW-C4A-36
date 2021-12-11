@@ -29,7 +29,7 @@ export class PlaceService {
   }
 
   editPlace(place: Place): Observable<any> {
-    const {id, city, type, offerType, price } = place;
+    const {id, city, type, offerType, price, urlPicture } = place;
 
     // If id is undefined, then create a new user via POST
     if (!id) {
@@ -37,7 +37,8 @@ export class PlaceService {
         city,
         type,
         offerType,
-        price
+        price,
+        urlPicture
       }, httpOptions);
     }
 
@@ -46,7 +47,8 @@ export class PlaceService {
       city,
       type,
       offerType,
-      price
+      price,
+      urlPicture
     }, httpOptions);
   }
 }

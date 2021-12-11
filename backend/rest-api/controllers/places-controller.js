@@ -139,11 +139,13 @@ const updatePlace = async (req, res, next) => {
   }
 
   // Update the changes manually :S
-  const { city, type, offerType, price} = req.body;
+  console.log(req.body);
+  const { city, type, offerType, price, urlPicture} = req.body;
   place.city = city;
   place.type = type;
   place.offerType = offerType;
   place.price = price;
+  place.urlPicture = urlPicture;
 
   // patch the place using mongoose
   try {
