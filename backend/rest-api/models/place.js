@@ -16,12 +16,13 @@ const placeSchema = new Schema({
     required: true,
   }, // apartamento, casa, local
   offerType: { type: String, enum: OFFER_TYPE, required: true }, // alquiler, venta
-  // price: {type: Number, required: true},
+  price: {type: Number, required: true},
   status: {
     type: String,
     enum: STATUS,
     default: 'activo',
   }, // activo, inactivo, comprado, ocupado
+  urlPicture: String,
   // pictures: [String],
   // urlVideo: String,
   // contactInfo: String,

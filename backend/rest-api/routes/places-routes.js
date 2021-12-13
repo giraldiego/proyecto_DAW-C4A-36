@@ -27,7 +27,7 @@ router.post(
     check('city').not().isEmpty(),
     check('type').not().isEmpty(),
     check('offerType').not().isEmpty(),
-    check('creator').not().isEmpty(),
+    check('price').isInt({min: 0})
   ],
   placesController.createPlace
 );
@@ -39,6 +39,7 @@ router.patch(
     check('city').not().isEmpty(),
     check('type').not().isEmpty(),
     check('offerType').not().isEmpty(),
+    check('price').isInt({min: 0})
   ],
   placesController.updatePlace
 );

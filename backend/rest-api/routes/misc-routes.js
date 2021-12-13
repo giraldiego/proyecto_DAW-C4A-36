@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 
 // Route for contact us form
 router.post(
-  '/contactus',
+  '/api/contactus',
   [check('message').not().isEmpty(), check('from').normalizeEmail().isEmail()],
   (req, res, next) => {
     const errors = validationResult(req);

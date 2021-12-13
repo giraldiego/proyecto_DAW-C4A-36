@@ -1,0 +1,38 @@
+<div class="container" style="max-width: 660px; background-color: #f5f5f5;">
+    <form *ngIf="!sentSucceded && !submitted"
+        #contactForm="ngForm" (ngSubmit)="onSubmit()" >
+        <div class="mb-3 form-group">
+            <label for="email" class="form-label">Indiquenos su email:</label>
+            <input type="email" class="form-control" id="email" placeholder="name@example.com"
+            [(ngModel)]="model.email" name="email"
+            required
+            email
+            #email="ngModel"
+            >
+        </div>
+        <div class="mb-3 form-group">
+            <label for="message" class="form-label">Escriba su mensaje:</label>
+            <textarea class="form-control" id="message" rows="4"
+            [(ngModel)]="model.message" name="message"
+            required
+            minlength="10"
+            maxlength="100"
+            #message="ngModel"
+            ></textarea>
+        </div>
+        <div [hidden]="message.valid || message.pristine"
+        class="alert alert-danger">
+            Un mensaje de al menos 10 caracteres y maximo 100, es requerido.
+        </div>
+
+        <button type="submit" class="btn btn-primary"
+        [disabled]="!contactForm.form.valid"
+        >Enviar</button>
+    </form>
+    <div class="alert alert-warning" *ngIf="submitted && sentFailed">
+        No se pudo enviar el mensaje!<br />{{ response }}
+    </div>
+    <div class="alert alert-success" *ngIf="submitted && sentSucceded">
+        Mensaje enviado!.
+    </div>
+</div>

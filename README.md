@@ -29,6 +29,7 @@ CONNECTION_STRING=mongodb+srv://<username>:<password>:@<cluster_address>.mongodb
 SENDGRID_API_KEY=your_sendgrid_api_key
 SENDGRID_VERIFIED_SENDER=your_email_verified_at_sendgrid
 ADMIN_EMAIL=your_email
+PRIVACY_KEY=your_very_own_privacy_key
 ```
 
 
@@ -52,13 +53,13 @@ $ npm start
 Abra otra ventana de terminal y desde el directorio raiz, configure y ejecute el servidor del frontend:
 ```sh
 $ cd frontend
-$ cd hc-angular
+$ cd angular-app
 $ npm i
 $ ng serve -o
 ```
 Se abrira una ventana del navegador desde donde podra ejecutar la app, cree unos cuantos usuario, el rol por defecto al crearlos
 es "cliente",  cambie el rol de uno de ellos a "admin" editando directamente los documentos en el Cluster de mongo para acceder
-a mas funcionalidades desde la webapp. 
+a mas funcionalidades desde la webapp.
 
 ## Uso
 

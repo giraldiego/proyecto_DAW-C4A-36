@@ -1,0 +1,55 @@
+<div class="container">
+    <form
+    #placeForm="ngForm"
+    (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="city">Ciudad</label>
+            <input id="city" type="text" class="form-control"
+            [(ngModel)]="place.city" name="city"
+            required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="type">Tipo Inmueble</label>
+            <select id="type" class="form-control"
+            [(ngModel)]="place.type" name="type"
+            required>
+                <option *ngFor="let type of types" [value]="type">{{type}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="offerType">Tipo Oferta</label>
+            <select id="offerType" class="form-control"
+            [(ngModel)]="place.offerType" name="offerType"
+            required>
+                <option *ngFor="let offerType of offerTypes" [value]="offerType">{{offerType}}</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Precio</label>
+            <input id="price" type="number" class="form-control" min="0"
+            [(ngModel)]="place.price" name="price"
+            required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="urlPicture">Url Foto</label>
+            <input id="urlPicture" type="text" class="form-control"
+            [(ngModel)]="place.urlPicture" name="urlPicture"
+            >
+        </div>
+
+        <hr>
+
+        <button type="submit" class="btn btn-primary"
+        [disabled]="!placeForm.form.valid"
+        >Grabar</button>
+    </form>
+    <div class="alert alert-warning" *ngIf="submitted && saveFailed">
+        No se pudieron grabar los cambios<br />{{ response }}
+    </div>
+</div>

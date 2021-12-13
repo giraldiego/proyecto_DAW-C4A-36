@@ -55,13 +55,22 @@ const signup = async (req, res, next) => {
     return next(new HttpError('Singup failed, please try again', 500));
   }
 
-  // TODO: Send email for verification
+  const userEmail = {
+    recipient: user.email,
+    subject: 'Sus credenciales para HogaColombia',
+    emailBody: `Hola ${user.name}, bienvenido a Hogar Colombia, su contraseña de acceso es:
+    "${password}"`,
+  };
 
-  res.status(201).json({ message: 'Sign up succesfull!' });
+  return sendEmail(userEmail)
+    .then(() => res.status(201).json({ message: 'Signup succesfull!' }))
+    .catch((err) =>
+      next(new HttpError('Error sending the email, please try again', 500))
+    );
 };
 
 // Updated to use mongoose
-const login = async (req, res, next) => {
+const signin = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
@@ -107,7 +116,7 @@ const login = async (req, res, next) => {
         email: user.mail,
         role: user.role,
       },
-      'privacy_key', // TODO: Change this for something secure
+      process.env.PRIVACY_KEY,
       { expiresIn: '1h' }
     );
   } catch (error) {
@@ -152,6 +161,9 @@ const resetPassword = async (req, res, next) => {
   });
   // newPassword = 'random_password';
 
+  // TODO: Delete this log from final production
+  console.log('generated password: ' + newPassword);
+
   let hashedPassword;
   try {
     hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -189,7 +201,7 @@ const resetPassword = async (req, res, next) => {
 const getAllUsers = async (req, res, next) => {
   let users;
   try {
-    users = await User.find({}, 'email role');
+    users = await User.find({}, 'name email role');
   } catch (error) {
     return next(new HttpError('Something went wrong, please try again', 500));
   }
@@ -200,7 +212,7 @@ const getAllUsers = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   let user;
   try {
-    user = await User.findById(req.params.uid, 'email role');
+    user = await User.findById(req.params.uid, '-password');
   } catch (error) {
     console.log(error.message);
     return next(new HttpError('Something went wrong, please try again', 500));
@@ -209,6 +221,79 @@ const getUser = async (req, res, next) => {
     return next(new HttpError('Could not find user with that id ', 500));
   }
   res.json({ user: user.toObject({ getters: true }) });
+};
+
+  const createUser = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    return next(new HttpError('Invalid inputs', 400));
+  }
+
+  // Extract fields from body
+  const { name, email, role } = req.body;
+
+  // Check if email already exists in the DB
+
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (error) {
+    return next(new HttpError('Creation failed (email), please try again', 500));
+  }
+
+  if (existingUser) {
+    return next(
+      new HttpError('Error, an user with that email already exists', 422)
+    );
+  }
+
+  // const password = 'abc123';
+  // Generate random password
+  const password = generator.generate({
+    length: 10,
+    numbers: true,
+  });
+
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password, 10);
+  } catch (error) {
+    console.log(error.message);
+    return next(new HttpError('Creation failed (hashing), please try again', 500));
+  }
+
+  // Create User object with body info
+  const user = new User({
+    name,
+    email,
+    password: hashedPassword,
+    role: role,
+    places: [],
+    requests: [],
+  });
+
+  try {
+    await user.save();
+  } catch (error) {
+    return next(new HttpError('Creation failed (saving), please try again', 500));
+  }
+
+  // TODO: Delete this log from final production
+  console.log('generated password: ' + password);
+
+  const userEmail = {
+    recipient: user.email,
+    subject: 'Sus credenciales para HogaColombia',
+    emailBody: `Hola ${user.name}, bienvenido a Hogar Colombia, su contraseña de acceso es:
+    "${password}"`,
+  };
+
+  return sendEmail(userEmail)
+    .then(() => res.status(201).json({ message: 'Creation succesfull!' }))
+    .catch((err) =>
+      next(new HttpError('Error sending the email, please try again', 500))
+    );
 };
 
 // Delete one user with provided id
@@ -232,7 +317,7 @@ const patchUser = async (req, res, next) => {
   }
 
   // Extract fields from body
-  const { role } = req.body;
+  const { name, email, role } = req.body;
 
   let user;
   try {
@@ -245,7 +330,22 @@ const patchUser = async (req, res, next) => {
     return next(new HttpError('Could not find user with that id ', 500));
   }
 
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (error) {
+    return next(new HttpError('Singup failed, please try again', 500));
+  }
+
+  if (existingUser && (existingUser.id !== user.id)) {
+    return next(
+      new HttpError('Error, an user with that email already exists', 422)
+    );
+  }
+
   // Update role
+  user.name = name;
+  user.email = email;
   user.role = role;
 
   try {
@@ -259,8 +359,9 @@ const patchUser = async (req, res, next) => {
 
 exports.getAllUsers = getAllUsers;
 exports.getUser = getUser;
+exports.createUser = createUser;
 exports.deleteUser = deleteUser;
 exports.patchUser = patchUser;
 exports.signup = signup;
-exports.login = login;
+exports.signin = signin;
 exports.resetPassword = resetPassword;

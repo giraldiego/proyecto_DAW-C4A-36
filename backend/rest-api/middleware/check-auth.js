@@ -7,7 +7,7 @@ function authUser(req, res, next) {
     if (!token) {
       throw new Error('Token not found on headers');
     }
-    const decodedToken = jwt.verify(token, 'privacy_key');
+    const decodedToken = jwt.verify(token, process.env.PRIVACY_KEY);
     req.userData = { userId: decodedToken.userId, role: decodedToken.role };
     next();
   } catch (error) {

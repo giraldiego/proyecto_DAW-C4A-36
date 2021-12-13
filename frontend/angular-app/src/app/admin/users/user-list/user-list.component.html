@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="border">
+        <a routerLink="./create" class="btn btn-md btn-outline-primary">
+            <i class="fa fa-user"></i>Crear Usuario</a>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <!-- <th>ID</th> -->
+                <th>Nombre</th>
+                <th>email</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <!-- <td><span>{{user.id}}</span></td> -->
+                <td><span>{{user.name}}</span></td>
+                <td><span>{{user.email}}</span></td>
+                <td><span>{{user.role}}</span></td>
+                <td>
+                    <a routerLink="./edit/{{user.id}}" class="btn btn-sm btn-warning">
+                      <i class="fa fa-edit"></i></a>
+                    <button class="btn btn-sm btn-danger"
+                    (click)="deleteUser(user.id)">
+                      <i class="fa fa-trash"></i></button>
+                  </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

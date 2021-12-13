@@ -6,25 +6,29 @@ const port = 3000;
 
 const mongoose = require('mongoose');
 
+// Import routers
+const authRouter = require('./routes/auth-routes');
 const placesRouter = require('./routes/places-routes');
 const usersRouter = require('./routes/users-routes');
 const miscRouter = require('./routes/misc-routes');
 
 const HttpError = require('./models/http-error');
 
+// TODO: Disable this for production!!!
 // allowing CORS for all resources on your server.
 const cors = require('cors');
 app.use(cors());
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
+app.use(
+    cors({
+        origin: 'http://localhost:4200',
+    })
+);
 
 // Add json parser
 app.use(express.json());
 
 // Register routes
+app.use('/api/auth', authRouter);
 app.use('/api/places', placesRouter);
 app.use('/api/users', usersRouter);
 app.use('', miscRouter);

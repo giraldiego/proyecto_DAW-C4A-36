@@ -1,0 +1,36 @@
+<div class="container">
+    <form
+    #userForm="ngForm"
+    (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <input id="name" type="text" class="form-control"
+            [(ngModel)]="user.name" name="name"
+            required
+            >
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" class="form-control"
+            [(ngModel)]="user.email" name="email"
+            required
+            email
+            >
+        </div>
+        <div class="form-group">
+            <label for="role">Rol</label>
+            <select id="role" class="form-control"
+            [(ngModel)]="user.role" name="role"
+            required>
+                <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+            </select>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary"
+        [disabled]="!userForm.form.valid"
+        >Grabar</button>
+    </form>
+    <div class="alert alert-warning" *ngIf="submitted && saveFailed">
+        No se pudieron grabar los cambios<br />{{ response }}
+    </div>
+</div>

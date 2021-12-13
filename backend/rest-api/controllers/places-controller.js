@@ -10,7 +10,7 @@ const getAllPlaces = async (req, res, next) => {
   let places;
 
   try {
-    places = await Place.find({status:'activo'}, 'city type offerType');
+    places = await Place.find({status:'activo'});
   } catch (error) {
     console.log(error.message);
     return next(new HttpError('Something went wrong, please try again', 500));
@@ -44,24 +44,23 @@ const getPlacesByUserId = async (req, res, next) => {
 
   let places;
   try {
-    places = await Place.find({ creator: userId }, 'city type offertype');
+    places = await Place.find({ creator: userId });
   } catch (error) {
     console.log(error.message);
     return next(new HttpError('Something went wrong, please try again', 500));
   }
 
-  if (!places || places.length === 0) {
-    return next(
-      new HttpError('Could not find places for the provided user id.', 404)
-    );
-  }
+  // if (!places || places.length === 0) {
+  //   return next(
+  //     new HttpError('Could not find places for the provided user id.', 404)
+  //   );
+  // }
 
   res.json({
     places: places.map((place) => place.toObject({ getters: true })),
   });
 };
 
-// TODO: Take creator info from token
 const createPlace = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -69,13 +68,16 @@ const createPlace = async (req, res, next) => {
     return next(new HttpError('Invalid inputs', 422));
   }
 
-  const { city, type, offerType, creator } = req.body;
+  const { city, type, offerType, price, urlPicture } = req.body;
+  const creator = req.userData.userId;
 
   const place = new Place({
     city,
     type,
     offerType,
+    price,
     creator,
+    urlPicture
   });
 
   // Check if the userId provided is a valid one
@@ -109,12 +111,12 @@ const createPlace = async (req, res, next) => {
   res.status(201).json({ place: place });
 };
 
-// TODO: Implement relation User-Place
+// TODO: Implement relation User-Place - DONE
 const updatePlace = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
-    throw new HttpError('Invalid inputs', 400);
+    return next(new HttpError('Invalid inputs', 400));
   }
 
   const placeId = req.params.pid;
@@ -128,14 +130,22 @@ const updatePlace = async (req, res, next) => {
   }
 
   if (!place) {
-    next(new HttpError('Could not find a place for the provided id.', 404));
+    return next(new HttpError('Could not find a place for the provided id.', 404));
+  }
+
+  // Only admins or owner can modify a place
+  if (!(req.userData.userId === place.creator.valueOf() || req.userData.role === 'admin')) {
+    return next(new HttpError('Unauthorized to update this place.', 401));
   }
 
   // Update the changes manually :S
-  const { city, type, offerType, } = req.body;
+  console.log(req.body);
+  const { city, type, offerType, price, urlPicture} = req.body;
   place.city = city;
   place.type = type;
   place.offerType = offerType;
+  place.price = price;
+  place.urlPicture = urlPicture;
 
   // patch the place using mongoose
   try {
@@ -162,7 +172,7 @@ const deletePlace = async (req, res, next) => {
   }
 
   if (!place) {
-    next(new HttpError('Could not find a place for the provided id.', 404));
+    return next(new HttpError('Could not find a place for the provided id.', 404));
   }
 
   // console.log(place);
